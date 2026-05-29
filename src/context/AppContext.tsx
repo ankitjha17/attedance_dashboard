@@ -7,8 +7,8 @@ import { toast } from "sonner";
 interface AppContextType {
   students: Student[];
   attendance: AttendanceRecord[];
-  addStudent: (name: string) => void;
-  updateStudent: (id: string, name: string) => void;
+  addStudent: (name: string, joiningDate?: string) => void;
+  updateStudent: (id: string, name: string, joiningDate?: string) => void;
   deleteStudent: (id: string) => void;
   markAttendance: (studentId: string, date: string, status: 'present' | 'absent') => void;
   deleteAttendanceRecord: (id: string) => void;
@@ -90,10 +90,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     loadData();
   }, []);
 
-  const addStudent = (name: string) => {
+  const addStudent = (name: string, joiningDate?: string) => {
     const newStudent: Student = {
       id: crypto.randomUUID(),
       name: name.trim(),
+      joiningDate,
       createdAt: new Date().toISOString(),
     };
     const newStudents = [...students, newStudent];
@@ -103,9 +104,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     toast.success("Student added successfully");
   };
 
-  const updateStudent = (id: string, name: string) => {
+  const updateStudent = (id: string, name: string, joiningDate?: string) => {
     const newStudents = students.map((student) =>
-      student.id === id ? { ...student, name: name.trim() } : student
+      student.id === id ? { ...student, name: name.trim(), joiningDate } : student
     );
     setStudents(newStudents);
     localStorage.setItem("students", JSON.stringify(newStudents));

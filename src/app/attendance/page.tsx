@@ -113,7 +113,14 @@ export default function AttendancePage() {
                       status === 'present' ? 'bg-green-50/50 dark:bg-green-900/10' : 
                       status === 'absent' ? 'bg-red-50/50 dark:bg-red-900/10' : ''
                     }>
-                      <TableCell className="font-medium">{student.name}</TableCell>
+                      <TableCell className="font-medium">
+                        {student.name}
+                        {student.joiningDate && (
+                          <span className="text-muted-foreground text-sm font-normal ml-2">
+                            ({format(new Date(student.joiningDate), "MMM yyyy")})
+                          </span>
+                        )}
+                      </TableCell>
                       <TableCell className="text-center">
                         <Button 
                           variant={status === 'present' ? "default" : "outline"}

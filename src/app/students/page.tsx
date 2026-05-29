@@ -32,9 +32,10 @@ export default function StudentsPage() {
   // Dialog states
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [newStudentName, setNewStudentName] = useState("");
+  const [newStudentJoiningDate, setNewStudentJoiningDate] = useState("");
   
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editingStudent, setEditingStudent] = useState<{id: string, name: string} | null>(null);
+  const [editingStudent, setEditingStudent] = useState<{id: string, name: string, joiningDate?: string} | null>(null);
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deletingStudent, setDeletingStudent] = useState<{id: string, name: string} | null>(null);
@@ -47,8 +48,9 @@ export default function StudentsPage() {
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (newStudentName.trim()) {
-      addStudent(newStudentName);
+      addStudent(newStudentName, newStudentJoiningDate);
       setNewStudentName("");
+      setNewStudentJoiningDate("");
       setIsAddOpen(false);
     }
   };
@@ -56,7 +58,7 @@ export default function StudentsPage() {
   const handleEdit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editingStudent && editingStudent.name.trim()) {
-      updateStudent(editingStudent.id, editingStudent.name);
+      updateStudent(editingStudent.id, editingStudent.name, editingStudent.joiningDate);
       setEditingStudent(null);
       setIsEditOpen(false);
     }
@@ -103,6 +105,15 @@ export default function StudentsPage() {
                     autoFocus
                   />
                 </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="joiningDate">Joining Date (Optional)</Label>
+                  <Input 
+                    id="joiningDate" 
+                    type="date"
+                    value={newStudentJoiningDate}
+                    onChange={(e) => setNewStudentJoiningDate(e.target.value)}
+                  />
+                </div>
               </div>
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setIsAddOpen(false)}>Cancel</Button>
@@ -144,14 +155,21 @@ export default function StudentsPage() {
             ) : (
               filteredStudents.map((student) => (
                 <TableRow key={student.id}>
-                  <TableCell className="font-medium">{student.name}</TableCell>
+                  <TableCell className="font-medium">
+                    {student.name}
+                    {student.joiningDate && (
+                      <span className="text-muted-foreground text-sm font-normal ml-2">
+                        ({format(new Date(student.joiningDate), "MMM yyyy")})
+                      </span>
+                    )}
+                  </TableCell>
                   <TableCell>{format(new Date(student.createdAt), "MMM d, yyyy")}</TableCell>
                   <TableCell className="text-right">
                     <Button 
                       variant="ghost" 
                       size="icon"
                       onClick={() => {
-                        setEditingStudent({ id: student.id, name: student.name });
+                        setEditingStudent({ id: student.id, name: student.name, joiningDate: student.joiningDate });
                         setIsEditOpen(true);
                       }}
                     >
@@ -192,6 +210,15 @@ export default function StudentsPage() {
                   value={editingStudent?.name || ""}
                   onChange={(e) => setEditingStudent(prev => prev ? {...prev, name: e.target.value} : null)}
                   autoFocus
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-joiningDate">Joining Date (Optional)</Label>
+                <Input 
+                  id="edit-joiningDate" 
+                  type="date"
+                  value={editingStudent?.joiningDate || ""}
+                  onChange={(e) => setEditingStudent(prev => prev ? {...prev, joiningDate: e.target.value} : null)}
                 />
               </div>
             </div>

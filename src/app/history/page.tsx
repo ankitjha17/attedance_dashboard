@@ -114,7 +114,14 @@ export default function HistoryPage() {
                     const stats = getStudentStats(student.id);
                     return (
                       <TableRow key={student.id}>
-                        <TableCell className="font-medium">{student.name}</TableCell>
+                        <TableCell className="font-medium">
+                          {student.name}
+                          {student.joiningDate && (
+                            <span className="text-muted-foreground text-sm font-normal ml-2">
+                              ({format(new Date(student.joiningDate), "MMM yyyy")})
+                            </span>
+                          )}
+                        </TableCell>
                         <TableCell className="text-center">{stats.total}</TableCell>
                         <TableCell className="text-center text-green-600 font-medium">{stats.present}</TableCell>
                         <TableCell className="text-center text-red-600 font-medium">{stats.absent}</TableCell>
@@ -176,7 +183,14 @@ export default function HistoryPage() {
                     
                     return (
                       <TableRow key={student.id}>
-                        <TableCell className="font-medium">{student.name}</TableCell>
+                        <TableCell className="font-medium">
+                          {student.name}
+                          {student.joiningDate && (
+                            <span className="text-muted-foreground text-sm font-normal ml-2">
+                              ({format(new Date(student.joiningDate), "MMM yyyy")})
+                            </span>
+                          )}
+                        </TableCell>
                         <TableCell className="text-right">
                           {record ? (
                             record.status === 'present' ? (

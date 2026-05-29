@@ -1,6 +1,7 @@
 export type Student = {
   id: string;
   name: string;
+  joiningDate?: string; // YYYY-MM-DD
   createdAt: string;
 };
 
