@@ -81,10 +81,8 @@ export default function StudentsPage() {
         </div>
         
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" /> Add Student
-            </Button>
+          <DialogTrigger render={<Button />}>
+            <Plus className="mr-2 h-4 w-4" /> Add Student
           </DialogTrigger>
           <DialogContent>
             <form onSubmit={handleAdd}>

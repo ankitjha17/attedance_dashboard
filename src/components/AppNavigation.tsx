@@ -72,10 +72,10 @@ export function AppNavigation() {
       {/* Mobile Nav */}
       <div className="md:hidden flex items-center p-4 bg-gray-900">
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-gray-800">
-              <Menu />
-            </Button>
+          <SheetTrigger render={
+            <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-gray-800" />
+          }>
+            <Menu />
           </SheetTrigger>
           <SheetContent side="left" className="p-0 bg-gray-900 border-none w-72">
             <NavContent />

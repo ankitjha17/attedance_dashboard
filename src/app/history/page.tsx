@@ -148,18 +148,15 @@ export default function HistoryPage() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <CardTitle>History by Date</CardTitle>
               <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal")}>
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
-                  </Button>
+                <PopoverTrigger render={<Button variant={"outline"} className={cn("w-[240px] justify-start text-left font-normal")} />}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="end">
                   <Calendar
                     mode="single"
                     selected={selectedDate}
                     onSelect={(date) => date && setSelectedDate(date)}
-                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
@@ -209,7 +206,7 @@ export default function HistoryPage() {
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 space-y-0 pb-4">
               <CardTitle>History by Student</CardTitle>
               <div className="flex gap-2">
-                <Select value={selectedStudentId} onValueChange={setSelectedStudentId}>
+                <Select value={selectedStudentId} onValueChange={(val) => val && setSelectedStudentId(val)}>
                   <SelectTrigger className="w-[200px]">
                     <SelectValue placeholder="Select a student" />
                   </SelectTrigger>
@@ -221,11 +218,9 @@ export default function HistoryPage() {
                 </Select>
 
                 <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-[160px] justify-start text-left font-normal">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {format(selectedMonth, "MMMM yyyy")}
-                    </Button>
+                  <PopoverTrigger render={<Button variant="outline" className="w-[160px] justify-start text-left font-normal" />}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {format(selectedMonth, "MMMM yyyy")}
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="end">
                     <div className="p-3">
